@@ -38,8 +38,6 @@
 (global-set-key (kbd "<M-down>")  'windmove-down)
 
 (cua-mode)
-
-(require 'ido)
 (ido-mode)
 
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
@@ -64,6 +62,7 @@
 
 (require 'hl-sexp)
 (global-hl-sexp-mode)
+(set-face-attribute 'hl-sexp-face nil :background zenburn-bg-1)
 
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
 (add-hook 'slime-repl-mode-hook 'highlight-parentheses-mode)
