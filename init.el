@@ -44,7 +44,6 @@
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
 
-
 (require 'package)
 (add-to-list 'package-archives
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -59,10 +58,11 @@
 (require 'ac-slime)
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+(ac-set-trigger-key "TAB")
 
 (require 'hl-sexp)
 (global-hl-sexp-mode)
-(set-face-attribute 'hl-sexp-face nil :background zenburn-bg-1)
+(set-face-attribute 'hl-sexp-face nil :background "#202020")
 
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
 (add-hook 'slime-repl-mode-hook 'highlight-parentheses-mode)
