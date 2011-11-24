@@ -34,14 +34,24 @@
 
 (global-set-key (kbd "<M-left>") 'previous-buffer)
 (global-set-key (kbd "<M-right>") 'next-buffer)
-(global-set-key (kbd "<M-up>")  'windmove-up)
-(global-set-key (kbd "<M-down>")  'windmove-down)
+(global-set-key (kbd "<M-up>") 'windmove-up)
+(global-set-key (kbd "<M-down>") 'windmove-down)
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (global-set-key (kbd "C-x f") 'find-file-in-project)
 
 (cua-mode)
 (ido-mode)
 (setq ido-enable-flex-matching t)
+(global-set-key
+ "\M-x"
+ (lambda ()
+   (interactive)
+   (call-interactively
+    (intern
+     (ido-completing-read
+      "M-x "
+      (all-completions "" obarray 'commandp))))))
 
 (require 'recentf)
 (recentf-mode)
