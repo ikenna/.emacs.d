@@ -65,6 +65,8 @@
 	     '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
+(require 'magit)
+
 (require 'zenburn)
 (zenburn)
 
