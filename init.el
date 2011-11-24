@@ -14,7 +14,7 @@
 (when (boundp 'scroll-bar-mode)
   (scroll-bar-mode -1))
 
-(if (window-system)
+(if window-system
     (progn
       (set-frame-height (selected-frame) 43)
       (set-frame-width (selected-frame) 132)))
@@ -37,8 +37,24 @@
 (global-set-key (kbd "<M-up>")  'windmove-up)
 (global-set-key (kbd "<M-down>")  'windmove-down)
 
+(global-set-key (kbd "C-x f") 'find-file-in-project)
+
 (cua-mode)
 (ido-mode)
+(setq ido-enable-flex-matching t)
+
+(require 'recentf)
+(recentf-mode)
+(setq recentf-max-saved-items 50)
+
+(defun ido-recentf-open ()
+  "Use `ido-completing-read' to \\[find-file] a recent file"
+  (interactive)
+  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
+      (message "Opening file...")
+    (message "Aborting")))
+(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+
 
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
@@ -58,7 +74,7 @@
 (require 'ac-slime)
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(ac-set-trigger-key "TAB")
+(define-key ac-mode-map "\M-/" 'auto-complete)
 
 (require 'hl-sexp)
 (global-hl-sexp-mode)
@@ -70,3 +86,5 @@
 (setq hl-paren-colors
       '("orange1" "yellow1" "greenyellow" "green1"
         "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
+
+(set-face-attribute 'default (selected-frame) :height 120)
