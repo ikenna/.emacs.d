@@ -67,6 +67,9 @@
 
 (require 'magit)
 
+(require 'browse-kill-ring)
+(browse-kill-ring-default-keybindings)
+
 (require 'zenburn)
 (zenburn)
 
