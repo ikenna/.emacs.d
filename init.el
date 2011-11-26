@@ -53,6 +53,8 @@
       "M-x "
       (all-completions "" obarray 'commandp))))))
 
+(require 'tramp)
+
 (require 'recentf)
 (recentf-mode)
 (setq recentf-max-saved-items 50)
