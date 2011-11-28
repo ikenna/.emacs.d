@@ -32,8 +32,13 @@
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-<f11>") 'slime)
 
-(global-set-key (kbd "<M-left>") 'previous-buffer)
-(global-set-key (kbd "<M-right>") 'next-buffer)
+(global-set-key (kbd "<C-S-iso-lefttab>") 'previous-buffer)
+(global-set-key (kbd "<C-tab>") 'next-buffer)
+(global-set-key (kbd "<M-C-left>") 'previous-buffer)
+(global-set-key (kbd "<M-C-right>") 'next-buffer)
+
+(global-set-key (kbd "<M-left>") 'windmove-left)
+(global-set-key (kbd "<M-right>") 'windmove-right)
 (global-set-key (kbd "<M-up>") 'windmove-up)
 (global-set-key (kbd "<M-down>") 'windmove-down)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
