@@ -27,7 +27,6 @@
 (savehist-mode t)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
-(global-set-key (kbd "C-z") 'undo)
 (global-set-key (kbd "C-q") 'delete-other-windows)
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-<f11>") 'slime)
@@ -100,7 +99,7 @@
 
 (require 'hl-sexp)
 (global-hl-sexp-mode)
-(set-face-attribute 'hl-sexp-face nil :background "#202020")
+(set-face-attribute 'hl-sexp-face nil :background "#181818")
 
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
 (add-hook 'slime-repl-mode-hook 'highlight-parentheses-mode)
@@ -110,3 +109,4 @@
         "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
 
 (set-face-attribute 'default (selected-frame) :height 120)
+
