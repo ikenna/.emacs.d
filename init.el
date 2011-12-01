@@ -1,3 +1,4 @@
+
 (let* ((my-lisp-dir "~/.emacs.d/")
         (default-directory my-lisp-dir))
   (setq load-path (cons my-lisp-dir load-path))
@@ -25,6 +26,7 @@
 (delete-selection-mode 1)
 (setq x-select-enable-clipboard t)
 (savehist-mode t)
+(global-auto-revert-mode t)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
@@ -47,15 +49,15 @@
 (cua-mode)
 (ido-mode)
 (setq ido-enable-flex-matching t)
-(global-set-key
- "\M-x"
- (lambda ()
-   (interactive)
-   (call-interactively
-    (intern
-     (ido-completing-read
-      "M-x "
-      (all-completions "" obarray 'commandp))))))
+;; (global-set-key
+;;  "\M-x"
+;;  (lambda ()
+;;    (interactive)
+;;    (call-interactively
+;;     (intern
+;;      (ido-completing-read
+;;       "M-x "
+;;       (all-completions "" obarray 'commandp))))))
 
 (require 'tramp)
 
