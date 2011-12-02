@@ -1,4 +1,3 @@
-
 (let* ((my-lisp-dir "~/.emacs.d/")
         (default-directory my-lisp-dir))
   (setq load-path (cons my-lisp-dir load-path))
@@ -27,6 +26,7 @@
 (setq x-select-enable-clipboard t)
 (savehist-mode t)
 (global-auto-revert-mode t)
+(require 'uniquify)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
@@ -58,7 +58,10 @@
 ;;      (ido-completing-read
 ;;       "M-x "
 ;;       (all-completions "" obarray 'commandp))))))
-
+(dolist (hook '(text-mode-hook markdown-mode-hook))
+  (add-hook hook (lambda () (flyspell-mode 1))))
+(dolist (hook '(emacs-lisp-mode-hook clojure-mode-hook))
+  (add-hook hook (lambda () (flyspell-prog-mode))))
 (require 'tramp)
 
 (require 'recentf)
@@ -102,6 +105,7 @@
 (require 'hl-sexp)
 (global-hl-sexp-mode)
 (set-face-attribute 'hl-sexp-face nil :background "#181818")
+(show-paren-mode)
 
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
 (add-hook 'slime-repl-mode-hook 'highlight-parentheses-mode)
