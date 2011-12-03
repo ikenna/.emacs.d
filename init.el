@@ -29,6 +29,10 @@
 (winner-mode 1)
 ;; (desktop-save-mode 1)
 
+(require 'layout-restore)
+(global-set-key [?\C-c ?l] 'layout-save-current)
+(global-set-key [?\C-c ?\C-l ?\C-l] 'layout-restore)
+(global-set-key [?\C-c ?\C-l ?\C-c] 'layout-delete-current)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
@@ -57,10 +61,10 @@
 ;;      (ido-completing-read
 ;;       "M-x "
 ;;       (all-completions "" obarray 'commandp))))))
-(dolist (hook '(text-mode-hook markdown-mode-hook))
-  (add-hook hook (lambda () (flyspell-mode 1))))
-(dolist (hook '(emacs-lisp-mode-hook clojure-mode-hook))
-  (add-hook hook (lambda () (flyspell-prog-mode))))
+;; (dolist (hook '(text-mode-hook markdown-mode-hook))
+;;   (add-hook hook (lambda () (flyspell-mode 1))))
+;; (dolist (hook '(emacs-lisp-mode-hook clojure-mode-hook))
+;;   (add-hook hook (lambda () (flyspell-prog-mode 1))))
 (require 'tramp)
 
 (require 'recentf)
