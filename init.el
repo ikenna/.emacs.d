@@ -26,6 +26,9 @@
 (setq x-select-enable-clipboard t)
 (savehist-mode t)
 (global-auto-revert-mode t)
+(winner-mode 1)
+;; (desktop-save-mode 1)
+
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
@@ -37,10 +40,7 @@
 (global-set-key (kbd "<M-C-left>") 'previous-buffer)
 (global-set-key (kbd "<M-C-right>") 'next-buffer)
 
-(global-set-key (kbd "<M-left>") 'windmove-left)
-(global-set-key (kbd "<M-right>") 'windmove-right)
-(global-set-key (kbd "<M-up>") 'windmove-up)
-(global-set-key (kbd "<M-down>") 'windmove-down)
+(windmove-default-keybindings 'meta)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 (global-set-key (kbd "C-x f") 'find-file-in-project)
@@ -142,5 +142,15 @@
       '("orange1" "yellow1" "greenyellow" "green1"
         "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
 
-(set-face-attribute 'default (selected-frame) :height 120)
+(defun toggle-current-window-dedication ()
+ (interactive)
+ (let* ((window    (selected-window))
+        (dedicated (window-dedicated-p window)))
+   (set-window-dedicated-p window (not dedicated))
+   (message "Window %sdedicated to %s"
+            (if dedicated "no longer " "")
+            (buffer-name))))
 
+(global-set-key [pause] 'toggle-current-window-dedication)
+
+(set-face-attribute 'default (selected-frame) :height 120)
