@@ -77,7 +77,6 @@
     (message "Aborting")))
 (global-set-key (kbd "C-x C-r") 'ido-recentf-open)
 
-
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
@@ -101,7 +100,35 @@
 (require 'ac-slime)
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(define-key ac-mode-map "\M-/" 'auto-complete)
+(global-auto-complete-mode t)
+
+;; Adapted from https://github.com/purcell/emacs.d/blob/master/init-auto-complete.el
+(setq tab-always-indent 'complete)  ;; use 'complete when auto-complete is disabled
+(add-to-list 'completion-styles 'initials t)
+
+;; hook AC into completion-at-point
+(defun set-auto-complete-as-completion-at-point-function ()
+  (setq completion-at-point-functions '(auto-complete)))
+(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
+;; Adapted from https://github.com/scottjad/dotfiles/blob/master/.emacs
+(defun jsj-ac-show-help ()
+  "show docs for symbol at point or at beginning of list if not on a symbol"
+  (interactive)
+  (let ((s (save-excursion
+             (or (symbol-at-point)
+		 (progn (backward-up-list)
+			(forward-char)
+			(symbol-at-point))))))
+    (popup-tip (if (equal major-mode 'emacs-lisp-mode)
+		   (ac-symbol-documentation s)
+		 (ac-slime-documentation (symbol-name s)))
+	       :point (point)
+	       :around t
+	       :scroll-bar t
+	       :margin t)))
+
+(define-key lisp-mode-shared-map (kbd "C-c C-q") 'jsj-ac-show-help)
 
 (require 'hl-sexp)
 (global-hl-sexp-mode)
@@ -117,22 +144,3 @@
 
 (set-face-attribute 'default (selected-frame) :height 120)
 
-;; Adapted from https://github.com/scottjad/dotfiles/blob/master/.emacs
-(require 'pos-tip)
-(defun jsj-ac-show-help ()
-  "show docs for symbol at point or at beginning of list if not on a symbol"
-  (interactive)
-  (let ((s (save-excursion
-             (or (symbol-at-point)
-                 (progn (backward-up-list)
-                        (forward-char)
-                        (symbol-at-point))))))
-    (popup-tip (if (equal major-mode 'emacs-lisp-mode)
-		   (ac-symbol-documentation s)
-		 (ac-slime-documentation (symbol-name s)))
-	       :point (point)
-	       :around t
-	       :scroll-bar t
-	       :margin t)))
-
-(define-key lisp-mode-shared-map (kbd "C-c C-q") 'jsj-ac-show-help)
