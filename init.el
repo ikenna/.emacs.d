@@ -26,7 +26,6 @@
 (setq x-select-enable-clipboard t)
 (savehist-mode t)
 (global-auto-revert-mode t)
-(require 'uniquify)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
@@ -67,6 +66,8 @@
 (require 'recentf)
 (recentf-mode)
 (setq recentf-max-saved-items 50)
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'post-forward)
 
 (defun ido-recentf-open ()
   "Use `ido-completing-read' to \\[find-file] a recent file"
@@ -116,3 +117,22 @@
 
 (set-face-attribute 'default (selected-frame) :height 120)
 
+;; Adapted from https://github.com/scottjad/dotfiles/blob/master/.emacs
+(require 'pos-tip)
+(defun jsj-ac-show-help ()
+  "show docs for symbol at point or at beginning of list if not on a symbol"
+  (interactive)
+  (let ((s (save-excursion
+             (or (symbol-at-point)
+                 (progn (backward-up-list)
+                        (forward-char)
+                        (symbol-at-point))))))
+    (popup-tip (if (equal major-mode 'emacs-lisp-mode)
+		   (ac-symbol-documentation s)
+		 (ac-slime-documentation (symbol-name s)))
+	       :point (point)
+	       :around t
+	       :scroll-bar t
+	       :margin t)))
+
+(define-key lisp-mode-shared-map (kbd "C-c C-q") 'jsj-ac-show-help)
