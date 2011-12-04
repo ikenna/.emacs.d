@@ -20,6 +20,7 @@
       (set-frame-width (selected-frame) 132)))
 
 (fset 'yes-or-no-p 'y-or-n-p)
+(setq-default indent-tabs-mode nil)
 
 (transient-mark-mode t)
 (delete-selection-mode 1)
