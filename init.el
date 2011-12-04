@@ -33,6 +33,7 @@
 (global-set-key [?\C-c ?l] 'layout-save-current)
 (global-set-key [?\C-c ?\C-l ?\C-l] 'layout-restore)
 (global-set-key [?\C-c ?\C-l ?\C-c] 'layout-delete-current)
+(setq layout-restore-after-killbuffer nil)
 
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
@@ -104,7 +105,6 @@
 (require 'ac-slime)
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-(global-auto-complete-mode t)
 
 ;; Adapted from https://github.com/purcell/emacs.d/blob/master/init-auto-complete.el
 (setq tab-always-indent 'complete)  ;; use 'complete when auto-complete is disabled
@@ -114,6 +114,8 @@
 (defun set-auto-complete-as-completion-at-point-function ()
   (setq completion-at-point-functions '(auto-complete)))
 (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+
+(global-auto-complete-mode t)
 
 ;; Adapted from https://github.com/scottjad/dotfiles/blob/master/.emacs
 (defun jsj-ac-show-help ()
