@@ -88,7 +88,7 @@
 
 (require 'package)
 (add-to-list 'package-archives
-	     '("marmalade" . "http://marmalade-repo.org/packages/"))
+             '("marmalade" . "http://marmalade-repo.org/packages/"))
 (package-initialize)
 
 (require 'magit)
@@ -123,16 +123,17 @@
   (interactive)
   (let ((s (save-excursion
              (or (symbol-at-point)
-		 (progn (backward-up-list)
-			(forward-char)
-			(symbol-at-point))))))
-    (popup-tip (if (equal major-mode 'emacs-lisp-mode)
-		   (ac-symbol-documentation s)
-		 (ac-slime-documentation (symbol-name s)))
-	       :point (point)
-	       :around t
-	       :scroll-bar t
-	       :margin t)))
+                 (progn (backward-up-list)
+                        (forward-char)
+                        (symbol-at-point))))))
+    (popup-tip (if (or (equal major-mode 'emacs-lisp-mode)
+                       (equal major-mode 'lisp-interaction-mode))
+                   (ac-symbol-documentation s)
+                 (ac-slime-documentation (symbol-name s)))
+               :point (point)
+               :around t
+               :scroll-bar t
+               :margin t)))
 
 (define-key lisp-mode-shared-map (kbd "C-c C-q") 'jsj-ac-show-help)
 
