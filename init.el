@@ -98,6 +98,8 @@
 (package-initialize)
 
 (require 'magit)
+(require 'projectile)
+(projectile-global-mode)
 
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
