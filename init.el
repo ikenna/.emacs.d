@@ -147,7 +147,8 @@
 
 (require 'hl-sexp)
 (global-hl-sexp-mode)
-(set-face-attribute 'hl-sexp-face nil :background "#181818")
+(set-face-attribute 'hl-sexp-face nil :background "#202020")
+(set-face-background 'region zenburn-bg+2)
 (show-paren-mode)
 
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
