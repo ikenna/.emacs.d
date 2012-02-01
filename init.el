@@ -101,6 +101,9 @@
 (require 'projectile)
 (projectile-global-mode)
 
+(require 'shen-mode)
+(require 'inf-shen)
+
 (require 'browse-kill-ring)
 (browse-kill-ring-default-keybindings)
 
@@ -115,7 +118,7 @@
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
 ;; Adapted from https://github.com/purcell/emacs.d/blob/master/init-auto-complete.el
-(setq tab-always-indent 'complete)  ;; use 'complete when auto-complete is disabled
+(setq tab-always-indent 'auto-complete)  ;; use 'complete when auto-complete is disabled
 (add-to-list 'completion-styles 'initials t)
 
 ;; hook AC into completion-at-point
@@ -150,6 +153,7 @@
 (set-face-attribute 'hl-sexp-face nil :background "#202020")
 (set-face-background 'region zenburn-bg+2)
 (show-paren-mode)
+(idle-highlight-mode)
 
 (add-hook 'clojure-mode-hook 'highlight-parentheses-mode)
 (add-hook 'slime-repl-mode-hook 'highlight-parentheses-mode)
