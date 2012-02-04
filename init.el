@@ -39,7 +39,7 @@
 (global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
-(global-set-key (kbd "C-<f11>") 'slime)
+(global-set-key (kbd "C-<f11>") 'clojure-jack-in)
 
 (global-set-key (kbd "<C-S-iso-lefttab>") 'previous-buffer)
 (global-set-key (kbd "<C-tab>") 'next-buffer)
@@ -117,16 +117,65 @@
 (add-hook 'slime-mode-hook 'set-up-slime-ac)
 (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
 
+;; Stub to make Slime-JS run under same Slime as Clojure
+;; (defmacro define-slime-contrib (name _docstring &rest clauses)
+;;   (destructuring-bind (&key slime-dependencies
+;;                             swank-dependencies
+;;                             on-load 
+;;                             on-unload
+;;                             gnu-emacs-only
+;;                             authors 
+;;                             license)
+;;       (loop for (key . value) in clauses append `(,key ,value))
+;;     (let ((enable (intern (concat (symbol-name name) "-init")))
+;;           (disable (intern (concat (symbol-name name) "-unload"))))
+;;     `(progn
+;;        ,(when gnu-emacs-only
+;;           `(eval-and-compile
+;;              (assert (not (featurep 'xemacs)) ()
+;;                      ,(concat (symbol-name name)
+;;                               " does not work with XEmacs."))))
+;;        ,@(mapcar (lambda (d) `(require ',d)) slime-dependencies)
+;;        (defun ,enable ()
+;;          ,@(mapcar (lambda (d) `(slime-require ',d)) swank-dependencies)
+;;          ,@on-load)
+;;        (defun ,disable ()
+;;          ,@on-unload)))))
+
+;;(require 'slime-js)
+
 ;; Adapted from https://github.com/purcell/emacs.d/blob/master/init-auto-complete.el
-(setq tab-always-indent 'auto-complete)  ;; use 'complete when auto-complete is disabled
-(add-to-list 'completion-styles 'initials t)
+;; (setq tab-always-indent 'auto-complete)  ;; use 'complete when auto-complete is disabled
+;; (add-to-list 'completion-styles 'initials t)
 
 ;; hook AC into completion-at-point
-(defun set-auto-complete-as-completion-at-point-function ()
-  (setq completion-at-point-functions '(auto-complete)))
-(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+;; (defun set-auto-complete-as-completion-at-point-function ()
+;;    (setq completion-at-point-functions '(auto-complete)))
+;; (add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
 
 (global-auto-complete-mode t)
+(setq ac-auto-show-menu nil)
+(setq ac-use-quick-help nil)
+(setq ac-quick-help-height 32)
+
+(define-key ac-mode-map (kbd "TAB") 'smart-tab)
+;;(global-set-key [(tab)] 'smart-tab)
+(defun smart-tab ()
+  "This smart tab is minibuffer compliant: it acts as usual in
+    the minibuffer. Else, if mark is active, indents region. Else if
+    point is at the end of a symbol, expands it. Else indents the
+    current line."
+  (interactive)
+  (if (minibufferp)
+      (unless (minibuffer-complete)
+        (dabbrev-expan nil))
+    (if mark-active
+        (indent-region (region-beginning)
+                       (region-end))
+      (if (looking-at "\\_>")
+          (auto-complete nil)
+        (progn
+          (indent-for-tab-command))))))
 
 ;; Adapted from https://github.com/scottjad/dotfiles/blob/master/.emacs
 (defun jsj-ac-show-help ()
