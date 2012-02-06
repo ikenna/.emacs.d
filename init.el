@@ -24,11 +24,12 @@
 
 (transient-mark-mode t)
 (delete-selection-mode 1)
-(setq x-select-enable-clipboard t)
+;(setq x-select-enable-clipboard t)
 (savehist-mode t)
 (global-auto-revert-mode t)
 (winner-mode 1)
 ;; (desktop-save-mode 1)
+(setq split-width-threshold nil)
 
 (require 'layout-restore)
 (global-set-key [?\C-c ?l] 'layout-save-current)
@@ -49,16 +50,18 @@
 (windmove-default-keybindings 'meta)
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(global-set-key (kbd "S-C-<left>") 'shrink-window-horizontally)
-(global-set-key (kbd "S-C-<right>") 'enlarge-window-horizontally)
-(global-set-key (kbd "S-C-<down>") 'shrink-window)
-(global-set-key (kbd "S-C-<up>") 'enlarge-window)
+(global-set-key (kbd "M-S-C-<left>") 'shrink-window-horizontally)
+(global-set-key (kbd "M-S-C-<right>") 'enlarge-window-horizontally)
+(global-set-key (kbd "M-S-C-<down>") 'shrink-window)
+(global-set-key (kbd "M-S-C-<up>") 'enlarge-window)
 
 (global-set-key (kbd "C-x f") 'find-file-in-project)
 
 (cua-mode)
 (ido-mode)
 (setq ido-enable-flex-matching t)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
 ;; (global-set-key
 ;;  "\M-x"
 ;;  (lambda ()
@@ -121,10 +124,10 @@
 ;; (defmacro define-slime-contrib (name _docstring &rest clauses)
 ;;   (destructuring-bind (&key slime-dependencies
 ;;                             swank-dependencies
-;;                             on-load 
+;;                             on-load
 ;;                             on-unload
 ;;                             gnu-emacs-only
-;;                             authors 
+;;                             authors
 ;;                             license)
 ;;       (loop for (key . value) in clauses append `(,key ,value))
 ;;     (let ((enable (intern (concat (symbol-name name) "-init")))
