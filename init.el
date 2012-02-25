@@ -24,12 +24,17 @@
 
 (transient-mark-mode t)
 (delete-selection-mode 1)
-;(setq x-select-enable-clipboard t)
+(setq x-select-enable-clipboard t)
+(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+
+
 (savehist-mode t)
 (global-auto-revert-mode t)
 (winner-mode 1)
 ;; (desktop-save-mode 1)
 (setq split-width-threshold nil)
+(require 'popwin)
+(setq display-buffer-function 'popwin:display-buffer)
 
 (require 'layout-restore)
 (global-set-key [?\C-c ?l] 'layout-save-current)
@@ -37,7 +42,7 @@
 (global-set-key [?\C-c ?\C-l ?\C-c] 'layout-delete-current)
 (setq layout-restore-after-killbuffer nil)
 
-(global-set-key (kbd "RET") 'newline-and-indent)
+;;(global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
 (global-set-key (kbd "C-<f11>") 'clojure-jack-in)
