@@ -45,7 +45,7 @@
 ;;(global-set-key (kbd "RET") 'newline-and-indent)
 (global-set-key (kbd "C-q") 'delete-other-windows)
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
-(global-set-key (kbd "C-<f11>") 'clojure-jack-in)
+(global-set-key (kbd "C-<f11>") 'nrepl-jack-in)
 
 (global-set-key (kbd "<C-S-iso-lefttab>") 'previous-buffer)
 (global-set-key (kbd "<C-tab>") 'next-buffer)
